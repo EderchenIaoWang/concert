@@ -91,10 +91,16 @@
         <div class="px-6 py-10">
             <h2 class="text-xl font-bold mb-8 text-center tracking-widest text-stone-800 border-b border-stone-200 pb-3">演出者介紹</h2>
             
-            <!-- 陳以得 -->
+            <!-- 陳以得 (彩蛋容器) -->
             <div class="mb-10">
-                <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 bg-stone-100 shadow-sm cursor-pointer hover:opacity-95 active:scale-[0.99] transition-all">
+                <div id="performer-1-container" class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 bg-stone-100 shadow-sm cursor-pointer hover:opacity-95 active:scale-[0.99] transition-all relative">
                     <img id="performer-1" data-state="normal" src="https://lh3.googleusercontent.com/d/1_A-bZ0ThsbxKExI_AkNYAnSrW5Xf1wId" alt="陳以得" class="w-full h-full object-cover">
+                    <!-- Gotcha 文字疊加層：改為 items-start pt-4 對齊上方 -->
+                    <div id="gotcha-overlay" class="absolute inset-0 bg-black/40 flex items-start justify-center pt-4 opacity-0 pointer-events-none transition-opacity duration-300">
+                        <span class="serif-text text-white text-xs font-bold tracking-widest bg-stone-900/80 px-3 py-1 rounded-full backdrop-blur-sm shadow-md">
+                            Gotcha!
+                        </span>
+                    </div>
                 </div>
                 <h3 class="text-lg font-bold mb-1 tracking-wider text-stone-800">陳以得 <span class="text-xs text-stone-500 font-normal tracking-normal ml-1.5">古典吉他</span></h3>
                 <div class="text-stone-600 leading-relaxed text-xs space-y-1.5 mt-2 text-justify opacity-90">
@@ -106,7 +112,8 @@
             <!-- 吳沁頤 -->
             <div>
                 <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 bg-stone-100 shadow-sm">
-                    <img id="performer-2" src="https://lh3.googleusercontent.com/d/1HajUyaJ9E63YVuDU4kzgfGwSWK7b1yTd" alt="吳沁頤" class="w-full h-full object-cover">
+                    <!-- object-[center_25%] 取代 object-top，取得中間完美構圖 -->
+                    <img id="performer-2" src="https://lh3.googleusercontent.com/d/1HajUyaJ9E63YVuDU4kzgfGwSWK7b1yTd" alt="吳沁頤" class="w-full h-full object-cover object-[center_25%]">
                 </div>
                 <div class="flex items-center justify-between gap-2">
                     <h3 class="text-lg font-bold tracking-wider text-stone-800">吳沁頤 <span class="text-xs text-stone-500 font-normal tracking-normal ml-1.5">街頭速寫</span></h3>
@@ -195,7 +202,7 @@
                         <details class="bg-white rounded-lg border border-stone-200/40 shadow-sm overflow-hidden">
                             <summary class="p-3 cursor-pointer flex items-center justify-between hover:bg-stone-50 transition-colors">
                                 <div class="flex-1 pr-2">
-                                    <h4 class="font-medium text-stone-800 serif-text text-xs">05. Chôros No. 1 <span class="font-sans text-[11px] text-stone-400 font-normal ml-1">(鳩羅)</span></h4>
+                                    <h4 class="font-medium text-stone-800 serif-text text-xs">05. Chôros No. 1</h4>
                                     <p class="text-[10px] text-stone-400 mt-0.5">Heitor Villa-Lobos</p>
                                 </div>
                                 <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-stone-400 chevron shrink-0"></i>
@@ -254,7 +261,7 @@
                             </summary>
                             <div class="px-3 pb-3 pt-0.5 text-xs text-stone-600 bg-stone-50/40 border-t border-stone-100/60 space-y-1">
                                 <p><strong>露伊絲·渥克 (Luise Walker)</strong><br>奧地利著名的女性古典吉他演奏家與作曲家。</p>
-                                <p>《小羅曼史》旋律優美抒情，洋溢著溫慢且浪漫的傳統歐洲風情。</p>
+                                <p>《小羅曼史》旋律優美抒情，洋溢著溫暖且浪漫的傳統歐洲風情。</p>
                             </div>
                         </details>
 
@@ -355,18 +362,23 @@
         lucide.createIcons();
 
         // 隱藏彩蛋邏輯
+        const yideContainer = document.getElementById('performer-1-container');
         const yideImg = document.getElementById('performer-1');
+        const gotchaOverlay = document.getElementById('gotcha-overlay');
         const normalPhoto = "https://lh3.googleusercontent.com/d/1_A-bZ0ThsbxKExI_AkNYAnSrW5Xf1wId";
         const easterPhoto = "https://lh3.googleusercontent.com/d/1lm4XYFg7Mn4k5e-soCg52QGzgOrB1Ifh";
 
-        yideImg.addEventListener('click', () => {
+        yideContainer.addEventListener('click', () => {
             if (yideImg.dataset.state === 'normal') {
                 yideImg.src = easterPhoto;
                 yideImg.dataset.state = 'easter';
-                alert("Gotcha！");
+                gotchaOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                gotchaOverlay.classList.add('opacity-100');
             } else {
                 yideImg.src = normalPhoto;
                 yideImg.dataset.state = 'normal';
+                gotchaOverlay.classList.remove('opacity-100');
+                gotchaOverlay.classList.add('opacity-0', 'pointer-events-none');
             }
         });
     </script>
